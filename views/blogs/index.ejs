@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Partial/head.ejs')%>
+<body>
+    <%-include('../Partial/nav.ejs')%>
+
+    <div class="Blog Content">
+        <h1>All Blogs</h1>
+        <%if(user){%>
+        
+      <% if(blogs.length > 0){ %>
+        <% blogs.forEach(blog =>{ %>
+          <%if(blog.owner == user._id){%>
+          <a class="single" href="/blogs/<%= blog._id %> " >
+            <h3 class="title"><%=blog.title%></h3>
+            <p class="snippet"><%= blog.snippet%></p>
+          </a>
+          <%}%>
+        <%})%>
+        
+      <% }else{%>
+        <p>There are No Blogs to Display </p>
+
+      <%}%>
+      <%}%>
+
+    </div>
+
+    <%-include('../Partial/footer.ejs')%>
+    
+</body>
+</html>

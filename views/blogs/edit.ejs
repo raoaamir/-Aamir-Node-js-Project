@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('../Partial/head.ejs')%>
+<body>
+    <%-include('../Partial/nav.ejs')%>
+
+    <div class="create-blog content">
+        <form >
+          <label for="title">Blog title:</label>
+          <input type="text" id="title" name="title" required>
+          <label for="snippet">Blog snippet:</label>
+          <input type="text" id="snippet" name="snippet" required>
+          <label for="body">Blog body:</label>
+          <input type="text"  id="owner" name="owner" value="<%=user._id%>">
+          <textarea id="body" name="body" required></textarea>
+          <button>Update</button>
+        </form>
+    
+       
+      </div>
+
+      <%-include('../Partial/footer.ejs')%>
+
+      <script>
+        const form = document.querySelector('form')
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            //get the values
+            const title = form.title.value
+            const snippet = form.snippet.value
+            const body = form.body.value
+            try {
+                const result = await fetch('/blogs/<%= blog._id%>', {
+                    method: 'PUT',
+                    body: JSON.stringify({ title , snippet , body }),
+                    headers: { 'Content-Type': 'application/json' }
+    
+                })
+    
+                const data = await result.json()
+                if(data.blog){
+                    location.assign('/blogs/allBlogs')
+                }
+            }
+            catch (err) {
+                console.log(err)
+    
+            }
+        })
+    </script>
+    
+    
+    
+</body>
+</html>
