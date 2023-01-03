@@ -1,6 +1,6 @@
 const Blogs = require('../models/blog')
 
-const blog_index =(req ,res)=>{
+const view_blogs =(req ,res)=>{
     Blogs.find().sort({createdAt : -1})
     .then((result)=>{
         res.render('blogs/index', { title: 'All Blogs' , blogs : result})
@@ -11,7 +11,7 @@ const blog_index =(req ,res)=>{
     })
 }
 
-const blog_allBlogs =(req ,res)=>{
+const allblogs =(req ,res)=>{
     Blogs.find().sort({createdAt : -1})
     .then((result)=>{
         res.render('blogs/allBlogs', { title: 'All Blogs' , blogs : result})
@@ -34,7 +34,7 @@ const blog_detail =(req ,res)=>{
     })
 } 
 
-const blog_update =(req ,res)=>{
+const edit =(req ,res)=>{
     Blogs.findById(req.params.id)
     .then((result)=>{
         res.render('blogs/edit', { title: 'All Blogs' , blog : result})
@@ -45,11 +45,11 @@ const blog_update =(req ,res)=>{
     })
 } 
 
-const blog_create_get = (req ,res)=>{
+const create = (req ,res)=>{
 res.render('blogs/create',{title: 'Create New Blog'});
 }
 
-const blog_create_post = (req ,res)=>{
+const create_blog = (req ,res)=>{
     const blog = new Blogs(req.body)
 
     blog.save()
@@ -63,9 +63,9 @@ const blog_create_post = (req ,res)=>{
 
 
 
-const blog_update_Put = async (req ,res)=>{
+const blog_update = async (req ,res)=>{
  try {
-    console.log('req fired')
+  
     const id  = req.params.id
     const blog = await Blogs.findByIdAndUpdate(id ,{
         
@@ -92,12 +92,12 @@ const blog_delete = (req ,res)=>{
 
 
 module.exports = {
-    blog_index,
+    view_blogs,
     blog_detail,
-    blog_create_get,
-    blog_create_post,
+    create,
+    create_blog,
     blog_delete,
-    blog_allBlogs,
+    allblogs,
     blog_update,
-    blog_update_Put
+    edit
 }

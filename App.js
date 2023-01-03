@@ -1,7 +1,7 @@
 const express = require('express')
-const authRoutes = require('./routes/authRoutes');
-const cookieParser = require('cookie-parser');
-const { requireAuth, checkUser } = require('./middleWare/authMiddleware');
+const authRoutes = require('./routes/authRoutes')
+const cookieParser = require('cookie-parser')
+const { requireAuth, checkUser } = require('./middleWare/authMiddleware')
 //express App
 const App = express()
 // Connect To Mongodb
@@ -16,7 +16,7 @@ App.use(express.json())
 App.use(cookieParser())
 
 
-//middleware & Static files (style.css)
+//middleware & Static files
 App.use(express.static('public'))
 App.use(express.urlencoded({extended : true}))
 App.get('*', checkUser)
@@ -41,7 +41,8 @@ App.use((req, res) => {
     res.status(404).render('404', { title: '404' })
 })
 
-const dbURI ='mongodb+srv://aamir:12345@node-tut.lgbnxvi.mongodb.net/node-tut'
-mongoose.connect(dbURI ,{ useNewUrlParser : true , useUnifiedTopology : true})
-.then((result)=>App.listen(3000))
+mongoose.connect(process.env.DBURL ,{ useNewUrlParser : true , useUnifiedTopology : true})
+.then(()=>App.listen(process.env.PORT))
 .catch((err)=>console.log(err))
+
+
